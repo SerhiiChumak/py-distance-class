@@ -12,7 +12,7 @@ class Distance:
         return f"Distance(km={self.km})"
 
     @staticmethod
-    def _to_km(other: Distance | int | float) -> Distance | int | float:
+    def _to_km(other: Distance | int | float) -> int | float:
         if isinstance(other, Distance):
             return other.km
         return other
@@ -26,15 +26,14 @@ class Distance:
         self.km += km_to_add
         return self
 
-    def __mul__(self, other: Distance | int | float) -> Distance:
+    def __mul__(self, other: int | float) -> Distance:
         return Distance(self.km * other)
 
-    def __truediv__(self, other: Distance | int | float) -> Distance:
-        if other != 0:
-            result_km = round(self.km / other, 2)
-            return Distance(result_km)
-        else:
+    def __truediv__(self, other: int | float) -> Distance:
+        if other == 0:
             return Distance(0)
+        result_km = round(self.km / other, 2)
+        return Distance(result_km)
 
     def __lt__(self, other: Distance | int | float) -> bool:
         return self.km < self._to_km(other)
